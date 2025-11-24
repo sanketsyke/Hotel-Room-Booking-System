@@ -52,7 +52,11 @@ When executed, the system displays the main menu:
 - Give feedback : User can provide feedback
 
 ### Hotel Staff Features:
-- Checkout Room: 
+- Checkout Room: Hotel Staff can also checkout a user
+- View Rooms: View current rooms status
+- View Current Bookings: View the current guests in the hotel
+- View Feedbacks: Lists the feedbacks given by users
+- View User Bookings : Views all the bookings by a certain user
 
 ## Data Persistence
 - Booking and guest data are saved in `.dat` files for persistence across sessions.
