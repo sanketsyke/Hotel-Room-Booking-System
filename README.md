@@ -13,16 +13,16 @@ The **Hotel Room Booking System** is a C-based project designed to manage hotel 
 
 ## File Structure
 project/
-|-- auth.c, auth.h # Staff authentication module
-|-- booking.c, booking.h # Booking management
-|-- booking_id_counter.dat # Counter for unique booking IDs
-|-- bookings.dat # Data file for current bookings
-|-- constants.h # Shared constants
-|-- feedback.c, feedback.h # Feedback module
-|-- main.c # Main program (entry point)
-|-- nas_hotels.exe # Compiled executable (for Windows)
-|-- past_bookings.dat # Data file for past bookings
-|-- room.c, room.h # Room management
+-|-- auth.c, auth.h # Staff authentication module
+-|-- booking.c, booking.h # Booking management
+-|-- booking_id_counter.dat # Counter for unique booking IDs
+-|-- bookings.dat # Data file for current bookings
+-|-- constants.h # Shared constants
+-|-- feedback.c, feedback.h # Feedback module
+-|-- main.c # Main program (entry point)
+-|-- nas_hotels.exe # Compiled executable (for Windows)
+-|-- past_bookings.dat # Data file for past bookings
+-|-- room.c, room.h # Room management
 
 
 ## How to Run
