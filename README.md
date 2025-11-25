@@ -63,9 +63,9 @@ When executed, the system displays the main menu:
 - Feedback records and authentication credentials are managed within their respective modules.
 
 ## Team Members
-- Nitheesh Kumar Reddy
-- Bayyapu Adhiraj Reddy
-- Kumar Sanket 
+- Nitheesh Kumar Reddy  (IE2025015) : auth.c, auth.h, feedback.c, feedback.h
+- Bayyapu Adhiraj Reddy (IE2025008) : room.c, room.h, main.c
+- Kumar Sanket          (IE2025020) : booking.c, booking.h
 
 
 
