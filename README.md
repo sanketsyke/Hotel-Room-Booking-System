@@ -41,7 +41,7 @@ gcc main.c booking.c room.c feedback.c auth.c -o nas_hotels
 When executed, the system displays the main menu:
 
 - **User:** Allows booking rooms, viewing bookings, and submitting feedback.
-- **Hotel Staff:** Requires login; can view/manage bookings and room statuses.
+- **Hotel Staff:** Requires login; can view/manage bookings and room statuses. (password : nas2025)
 - **Exit:** Ends the program and saves all changes.
 
 ### User Features:
