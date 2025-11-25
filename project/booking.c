@@ -24,7 +24,6 @@ int getLastBookingID() {
     }
     return lastId;
 }
-
 // Save the last used booking ID
 void saveLastBookingID(int lastId) {
     FILE *fp = fopen(BOOKING_ID_FILE, "wb");
@@ -33,7 +32,6 @@ void saveLastBookingID(int lastId) {
         fclose(fp);
     }
 }
-
 // Generate a new booking ID and persist it
 int generateBookingID() {
     static int count = -1;
@@ -44,7 +42,6 @@ int generateBookingID() {
     saveLastBookingID(count);
     return count;
 }
-
 // Add a new booking for a given user
 void addBooking(const char *username) {
     Booking *newBooking = (Booking*) malloc(sizeof(Booking));
@@ -52,15 +49,12 @@ void addBooking(const char *username) {
         printf("Memory allocation failed!\n");
         return;
     }
-
     newBooking->bookingID = generateBookingID();
     strncpy(newBooking->customerName, username, NAME_LEN);
-
     printf("\nRooms available:\n");
     listRoomsTable();
     printf("Enter room number to book: ");
     scanf("%d", &newBooking->roomNumber);
-
     // Validate room number and availability
     Room *r = headRoom;
     int valid = 0;
@@ -72,27 +66,22 @@ void addBooking(const char *username) {
         }
         r = r->next;
     }
-
     if (!valid) {
         printf("Invalid room number or already booked.\n");
         free(newBooking);
         return;
     }
-
     // Insert new booking at the front of the list
     newBooking->next = headBooking;
     headBooking = newBooking;
     printf("Booking successful! Your booking ID: %d\n", newBooking->bookingID);
 }
-
 // Cancel or checkout a booking for the given user
 void cancelBookingForUser(const char *username) {
     int id, found = 0;
     printf("Enter booking ID to checkout/cancel: ");
     scanf("%d", &id);
-
     Booking *curr = headBooking, *prev = NULL;
-
     while (curr) {
         if (curr->bookingID == id && strcmp(curr->customerName, username) == 0) {
             // Mark corresponding room as available again
@@ -104,15 +93,12 @@ void cancelBookingForUser(const char *username) {
                 }
                 r = r->next;
             }
-
             moveBookingToHistory(curr);
-
             // Unlink node from active bookings list
             if (prev)
                 prev->next = curr->next;
             else
                 headBooking = curr->next;
-
             free(curr);
             printf("You have checked out. Booking cancelled and room is now available.\n");
             found = 1;
@@ -121,11 +107,9 @@ void cancelBookingForUser(const char *username) {
         prev = curr;
         curr = curr->next;
     }
-
     if (!found)
         printf("Booking ID not found or not your booking.\n");
 }
-
 // Move active booking to past bookings list
 void moveBookingToHistory(Booking *b) {
     PastBooking *pb = (PastBooking*) malloc(sizeof(PastBooking));
@@ -133,26 +117,21 @@ void moveBookingToHistory(Booking *b) {
         printf("Memory allocation failed!\n");
         return;
     }
-
     pb->bookingID = b->bookingID;
     pb->roomNumber = b->roomNumber;
     strncpy(pb->customerName, b->customerName, NAME_LEN);
-
     pb->next = headPastBooking;
     headPastBooking = pb;
 }
-
 // Display all rooms to the user
 void searchRooms() {
     printf("\nRooms at NAS Hotels:\n");
     listRoomsTable();
 }
-
 // Show active and past bookings for a given user
 void viewUserBookings(const char *username) {
     Booking *curr = headBooking;
     int found = 0;
-
     printf("--- Active Bookings ---\n");
     while (curr) {
         if (strcmp(curr->customerName, username) == 0) {
@@ -163,7 +142,6 @@ void viewUserBookings(const char *username) {
     }
     if (!found)
         printf("No current bookings for %s\n", username);
-
     PastBooking *pbc = headPastBooking;
     found = 0;
     printf("--- Past Bookings ---\n");
@@ -177,7 +155,6 @@ void viewUserBookings(const char *username) {
     if (!found)
         printf("No past bookings for %s\n", username);
 }
-
 // Staff menu: view bookings of a specific user
 void viewUserBookingsStaff() {
     char username[NAME_LEN];
@@ -187,7 +164,6 @@ void viewUserBookingsStaff() {
     username[strcspn(username, "\n")] = 0;
     viewUserBookings(username);
 }
-
 // Apply active bookings to room availability at startup
 void applyBookingToRooms() {
     Booking *curr = headBooking;
@@ -203,7 +179,6 @@ void applyBookingToRooms() {
         curr = curr->next;
     }
 }
-
 // Save active bookings to file
 void saveBookingData() {
     FILE *fp = fopen(BOOKING_FILE, "wb");
@@ -211,7 +186,6 @@ void saveBookingData() {
         printf("ERROR: Cannot open file for booking save!\n");
         return;
     }
-
     Booking *curr = headBooking;
     while (curr) {
         fwrite(curr, sizeof(Booking), 1, fp);
@@ -219,14 +193,12 @@ void saveBookingData() {
     }
     fclose(fp);
 }
-
 // Load active bookings from file
 void loadBookingData() {
     FILE *fp = fopen(BOOKING_FILE, "rb");
     if (!fp) {
         return;
     }
-
     Booking temp;
     while (fread(&temp, sizeof(Booking), 1, fp)) {
         Booking *b = (Booking*) malloc(sizeof(Booking));
@@ -241,7 +213,6 @@ void loadBookingData() {
     }
     fclose(fp);
 }
-
 // Save past bookings to file
 void savePastBookingData() {
     FILE *fp = fopen(PAST_BOOKING_FILE, "wb");
@@ -249,7 +220,6 @@ void savePastBookingData() {
         printf("ERROR: Cannot open file for past booking save!\n");
         return;
     }
-
     PastBooking *curr = headPastBooking;
     while (curr) {
         fwrite(curr, sizeof(PastBooking), 1, fp);
@@ -257,14 +227,12 @@ void savePastBookingData() {
     }
     fclose(fp);
 }
-
 // Load past bookings from file
 void loadPastBookingData() {
     FILE *fp = fopen(PAST_BOOKING_FILE, "rb");
     if (!fp) {
         return;
     }
-
     PastBooking temp;
     while (fread(&temp, sizeof(PastBooking), 1, fp)) {
         PastBooking *b = (PastBooking*) malloc(sizeof(PastBooking));
@@ -279,13 +247,11 @@ void loadPastBookingData() {
     }
     fclose(fp);
 }
-
 // Show all current guests (room view for staff)
 void viewAllCurrentGuests() {
     printf("\n--- Current Guests ---\n");
     printf("%-8s %-20s\n", "Room No", "Guest Name");
     printf("------------------------------\n");
-
     Booking *curr = headBooking;
     int found = 0;
     while (curr) {
@@ -296,16 +262,13 @@ void viewAllCurrentGuests() {
     if (!found)
         printf("No current guests.\n");
 }
-
 // User menu
 void userMenu() {
     int choice;
     char username[NAME_LEN];
-
     printf("Enter your name for login/view: ");
     fgets(username, NAME_LEN, stdin);
     username[strcspn(username, "\n")] = 0;
-
     do {
         printf("\n[User: %s] - NAS Hotels\n"
                "1. Search rooms\n"
@@ -316,7 +279,6 @@ void userMenu() {
                "6. Exit\nChoice: ", username);
         scanf("%d", &choice);
         getchar();
-
         if (choice == 1) searchRooms();
         else if (choice == 2) addBooking(username);
         else if (choice == 3) cancelBookingForUser(username);
@@ -324,10 +286,8 @@ void userMenu() {
         else if (choice == 5) addFeedback(username);
         else if (choice == 6) break;
         else printf("Invalid input. Please enter a number between 1 and 6.\n");
-
     } while (choice != 6);
 }
-
 // Staff menu
 void staffMenu() {
     int choice;
@@ -340,7 +300,6 @@ void staffMenu() {
                "5. View User Bookings (current & past)\n"
                "6. Exit\nChoice: ");
         scanf("%d", &choice);
-
         if (choice == 1) checkoutRoomStaff();
         else if (choice == 2) listRoomsTable();
         else if (choice == 3) viewAllCurrentGuests();
@@ -348,6 +307,5 @@ void staffMenu() {
         else if (choice == 5) viewUserBookingsStaff();
         else if (choice == 6) break;
         else printf("Invalid input. Please enter a number between 1 and 6.\n");
-
     } while (choice != 6);
 }
