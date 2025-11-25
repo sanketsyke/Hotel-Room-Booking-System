@@ -35,6 +35,9 @@ void loadPastBookingData();
 void savePastBookingData();
 
 // Booking operations
+int getLastBookingID();
+void saveLastBookingID(int lastId);
+int generateBookingID();
 void addBooking(const char *username);
 void cancelBookingForUser(const char *username);
 void moveBookingToHistory(Booking *b);
@@ -47,3 +50,4 @@ void viewUserBookingsStaff();
 void viewAllCurrentGuests();
 
 #endif  // BOOKING_H
+
